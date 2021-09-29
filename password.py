@@ -38,7 +38,7 @@ for i in range(digits_lenght):
 
 while True:
     random.shuffle(password)
-    if password[0] or password[24] in special_characters:
+    if password[0] in special_characters or password[24] in special_characters:
         print()
     if password[0] in digits or password[1] in digits or password [2] in digits:
         print()

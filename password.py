@@ -45,6 +45,3 @@ while True:
     else:
         print("".join(password))
         break
-    
-
-

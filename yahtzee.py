@@ -2,7 +2,7 @@ import random
 
 
 FinalUpperScores = [" "]*6
-FinalLowerScores = [' ']*7
+FinalLowerScores = [1,2,3,4,5,6,7]
 rolledDice = ['']*5
 FilledInUpper = []
 FilledInLower = []
@@ -347,7 +347,7 @@ SUBTOTAL = {}""".format(SubTotalUpper, TotalLower, SubTotal)
 
 
 rondes = 0
-while " " in FinalUpperScores and " " in FinalLowerScores:
+while " " in FinalUpperScores or " " in FinalLowerScores:
     rondes += 1
     if YesOrNo('Dit is ronde ' + str(rondes) +' wil je een nog een ronde?:'):
         rollDice()

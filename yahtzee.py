@@ -326,8 +326,7 @@ Kleine Straat       |{3}
 Groote Straat       |{4}
 Yahtzee             |{5}
 Chance              |{6}
----------------------------------------------
-""".format(FinalLowerScores[0], FinalLowerScores[1], FinalLowerScores[2], FinalLowerScores[3], FinalLowerScores[4],FinalLowerScores[5],FinalLowerScores[6])
+---------------------------------------------""".format(FinalLowerScores[0], FinalLowerScores[1], FinalLowerScores[2], FinalLowerScores[3], FinalLowerScores[4],FinalLowerScores[5],FinalLowerScores[6])
     #Berekent Subtotal en maakt Text
     SubTotal = TotalLower + SubTotalUpper
     SubTotalText = """TOTAL UPPER = {}

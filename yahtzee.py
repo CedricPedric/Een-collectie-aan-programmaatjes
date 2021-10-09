@@ -80,30 +80,22 @@ def lowerHalfScore(givenList:list):
     howManyDigits = []
     for digit in range(1,7):
         howManyDigits.append(givenList.count(digit))
-    bonusPoints = 0
     bonus = ""
     if 5 in howManyDigits:
         bonus = "Yahtzee!"
-        bonusPoints = 50
     elif (1 in givenList and 2 in givenList and 3 in givenList and 4 in givenList and 5 in givenList) or (2 in givenList and 3 in givenList and 4 in givenList and 5 in givenList and 6 in givenList):
         bonus = "Grote Straat"
-        bonusPoints = 40
     elif (1 in givenList and 2 in givenList and 3 in givenList and 4 in givenList) or (2 in givenList and 3 in givenList and 4 in givenList and 5 in givenList) or (3 in givenList and 4 in givenList and 5 in givenList and 6 in givenList):
         bonus = "Kleine Straat"
-        bonusPoints = 30
     elif 4 in howManyDigits:
         bonus = "Four of a Kind"
-        for positie in range(0,5):
-            bonusPoints += givenList[positie]
     elif 3 in howManyDigits and 2 in howManyDigits:
         bonus = "Full House"
-        bonusPoints = 25
     elif 3 in howManyDigits:
         bonus = "Three of a Kind"
-        for positie in range(0,5):
-            bonusPoints += givenList[positie]
 
-    return bonus,bonusPoints
+
+    return bonus
 
 #Functie om te kiezen wat je van de bovenste helft wilt behouden
 def FillUpper():
@@ -111,7 +103,7 @@ def FillUpper():
     global resultUpperHalf
     global FinalUpperScores
     while True:
-        inputKeep = int(input("Welk getal wil je houden?:"))
+        inputKeep = int(input("Welk getal wil je houden?: "))
         if inputKeep == 1:
             if 1 in FilledInUpper:
                 print("U heeft deze al ingevuld!")
@@ -159,21 +151,24 @@ def FillUpper():
 def FillLower():
     global resultLowerHalf
     global FilledInLower
-    global AmountLowerHalf
+    global rolledDice
     global FinalLowerScores
     global TextOptiesLower
     global rolledDice
 
     print(TextOptiesLower)
+    bonus = 0 
     while True:
-        inputKeepLower = int(input("Welke bonus wilt u invullen?"))
+        inputKeepLower = int(input("Welke bonus wilt u invullen?: "))
         if inputKeepLower == 1:
             chosenBonus = "Three of a Kind"
             if 1 in FilledInLower:
                 print("Deze is al eeder toegevoed!")
             else:
-                if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[0] = AmountLowerHalf
+                if chosenBonus == resultLowerHalf or resultLowerHalf == "Yahtzee!" or resultLowerHalf == "Four of a Kind" or resultLowerHalf == "Full House":
+                    for positie in range(0,5):
+                        bonus += rolledDice[positie]
+                    FinalLowerScores[0] = bonus
                     FilledInLower.append(1)
                     break
                 else:
@@ -185,8 +180,10 @@ def FillLower():
             if 2 in FilledInLower:
                 print("Deze is al eeder toegevoed!")
             else:
-                if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[1] = AmountLowerHalf
+                if chosenBonus == resultLowerHalf or resultLowerHalf == "Yahtzee!":
+                    for positie in range(0,5):
+                        bonus += rolledDice[positie]
+                    FinalLowerScores[1] = bonus
                     FilledInLower.append(2)
                     break
                 else:
@@ -199,7 +196,8 @@ def FillLower():
                 print("Deze is al eeder toegevoed!")
             else:
                 if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[2] = AmountLowerHalf
+                    bonus = 25
+                    FinalLowerScores[2] = bonus
                     FilledInLower.append(3)
                     break
                 else:
@@ -211,8 +209,9 @@ def FillLower():
             if 4 in FilledInLower:
                 print("Deze is al eeder toegevoed!")
             else:
-                if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[3] = AmountLowerHalf
+                if chosenBonus == resultLowerHalf or resultLowerHalf == "Grote Straat":
+                    bonus = 30
+                    FinalLowerScores[3] = bonus
                     FilledInLower.append(4)
                     break
                 else:
@@ -225,20 +224,8 @@ def FillLower():
                 print("Deze is al eeder toegevoed!")
             else:
                 if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[4] = AmountLowerHalf
-                    FilledInLower.append(5)
-                    break
-                else:
-                    FinalLowerScores[4] = 0
-                    FilledInLower.append(5)
-                    break
-        elif inputKeepLower == 5:
-            chosenBonus = "Grote Straat"
-            if 5 in FilledInLower:
-                print("Deze is al eeder toegevoed!")
-            else:
-                if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[4] = AmountLowerHalf
+                    bonus = 40
+                    FinalLowerScores[4] = bonus
                     FilledInLower.append(5)
                     break
                 else:
@@ -251,7 +238,8 @@ def FillLower():
                 print("Deze is al eeder toegevoed!")
             else:
                 if chosenBonus == resultLowerHalf:
-                    FinalLowerScores[5] = AmountLowerHalf
+                    bonus = 50
+                    FinalLowerScores[5] = bonus
                     FilledInLower.append(6)
                     break
                 else:
@@ -351,9 +339,10 @@ while " " in FinalUpperScores or " " in FinalLowerScores:
     if YesOrNo('Dit is ronde ' + str(rondes) +' wil je een nog een ronde?:'):
         rollDice()
         print(text())
+        pogingen = 2
         for x in range(2):
             listRerolls = [] #Geeft hier aan dat de list leeg is zodat de oude rerolls niet worden gebruikt
-            if YesOrNo("Wilt u dobbelstenen rerollen?: "):
+            if YesOrNo("Wilt u dobbelstenen rerollen? U heeft nog "  +  str(pogingen) +  " pogingen: "):
                 while True:
                     inputReroll = int(input("Welke dobbelstenen moeten opnieuw gerolled worden? (0 is done): "))
                     if inputReroll != 0:
@@ -362,9 +351,10 @@ while " " in FinalUpperScores or " " in FinalLowerScores:
                         break
                 reroll(listRerolls)
                 print("Rerolled Dice" + text())
+            pogingen = pogingen - 1
 
         resultUpperHalf, TextUpperHalf = upperHalfScore(rolledDice)
-        resultLowerHalf, AmountLowerHalf = lowerHalfScore(rolledDice)
+        resultLowerHalf = lowerHalfScore(rolledDice)
 
         inputUpperOrLower = input("Wilt u iets toevoegen aan de bovenste of ondeste helft?|upper or lower|: ")
         if inputUpperOrLower.lower() == 'upper':

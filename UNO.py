@@ -1,31 +1,29 @@
 import random
 
-
-#Maakt het Uno Deck
 def deckBuilder():
-	deck = []
-	kleuren = ['rood', 'groen', 'blauw', 'geel']
-	getalen = [0,1,2,3,4,5,6,7,8,9, 'Draw Two' ,'Skip Turn', 'Reverse']
-	wild = ['Wild', 'Wil Draw Four']
+	kaarten = []
+	kleuren = ["Rood","Blauw","Groen","Geel"]
+	waardes = ["0","1","2","3","4","5","6","7","8","9","Draw Two","Skip Turn","Reverse"]
 
+	kaart = {"Kleur": 0, "Waarde": 0}
 	for kleur in kleuren:
-		for getal in getalen:
-				deck.append(str(kleur) + ' ' + str(getal))
-				if getal != 0:
-					deck.append(str(kleur) + ' ' + str(getal))
-			
-	for x in range(4):
-			deck.append(wild[0])
-			deck.append(wild[1])
-
-	return deck
+		for waarde in waardes:
+			kaart = {"Kleur": kleur, "Waarde": waarde}
+			kaarten.append(kaart)
+	return kaarten
 
 UnoDeck = deckBuilder()
+
 print(UnoDeck)
-random.shuffle(UnoDeck)
+
+chosenCard = UnoDeck[0]
+randomCard = random.choice(UnoDeck)
 
 
-spelers = []
-amountSpelers = int(input("Vul aatal spelers in: "))
+print(chosenCard)
+print(randomCard)
 
-
+if randomCard["Waarde"] == chosenCard["Waarde"] or randomCard["Kleur"] == chosenCard["Kleur"]:
+	print("Je kan spelen!")
+else:
+	print("Je kan niet spelen")

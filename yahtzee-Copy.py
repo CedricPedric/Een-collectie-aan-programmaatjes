@@ -7,14 +7,25 @@ rolledDice = ['']*5
 FilledInUpper = []
 FilledInLower = []
 
-TextOptiesLower ="""Hey de opties die je hebt om te intevullen onderin zijn!
-Three of a Kind! = 1
-Four of a Kind! = 2
-Full House = 3
-Kleine Straat = 4
-Grote Straat = 5
-Yahtzee = 6
-Chance = 7"""
+TextOptiesLower ="""---------------------------------------------
+De cijfers voor het invullen van de onderste helft zijn:
+Three of a Kind! | 1 |
+Four of a Kind!  | 2 |
+Full House       | 3 |
+Kleine Straat    | 4 |
+Grote Straat     | 5 |
+Yahtzee          | 6 |
+Chance           | 7 |
+---------------------------------------------"""
+TextOptiesUpper ="""---------------------------------------------
+De cijfers voor het invullen van de onderste helft zijn:
+ENEN       | 1 |
+TWEEËN     | 2 |
+DRIEËN     | 3 |
+VIEREN     | 4 |
+VIJFEN     | 5 |
+ZESSEN     | 6 |
+---------------------------------------------"""
 
 #Function voor dobbelstenen rerollen
 def reroll(givenRerolls:list):
@@ -102,6 +113,9 @@ def FillUpper():
     global FilledInUpper
     global resultUpperHalf
     global FinalUpperScores
+    global TextOptiesUpper
+
+    print(TextOptiesUpper)
     while True:
         inputKeep = int(input("Welk getal wil je houden?: "))
         if inputKeep == 1:
@@ -355,16 +369,20 @@ while " " in FinalUpperScores or " " in FinalLowerScores:
 
         resultUpperHalf, TextUpperHalf = upperHalfScore(rolledDice)
         resultLowerHalf = lowerHalfScore(rolledDice)
-
-        inputUpperOrLower = input("Wilt u iets toevoegen aan de bovenste of ondeste helft?|upper or lower|: ")
-        if inputUpperOrLower.lower() == 'upper':
-            FillUpper()
-        elif inputUpperOrLower.lower() == 'lower':
-            if resultLowerHalf != "":
-                print("je hebt een bonus! " + resultLowerHalf)
+        while True:
+            inputUpperOrLower = input("Wilt u iets toevoegen aan de bovenste of ondeste helft?|upper or lower|: ")
+            if inputUpperOrLower.lower() == 'upper':
+                FillUpper()
+                break
+            elif inputUpperOrLower.lower() == 'lower':
+                if resultLowerHalf != "":
+                    print("je hebt een bonus! " + resultLowerHalf)
+                else:
+                    print("je hebt geen bonus")
+                FillLower()
+                break
             else:
-                print("je hebt geen bonus")
-            FillLower()
+                print("Invalid Option")
                 
         ScoreBoard()
     else:

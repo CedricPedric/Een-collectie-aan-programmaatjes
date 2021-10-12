@@ -1,6 +1,5 @@
 import random
 
-
 FinalUpperScores = [" "]*6
 FinalLowerScores = [" "]*7
 rolledDice = ['']*5
@@ -42,12 +41,12 @@ def text():
 """.format(rolledDice[0], rolledDice[1], rolledDice[2], rolledDice[3],rolledDice[4])
     return TEXT
 #Simple Yes or No functie
-def YesOrNo(vraag = 'yes or no'):
+def YesOrNo(question = 'yes or no'):
     while True:
-        antwoord = input(vraag)
-        if antwoord == 'yes':
+        answer = input(question)
+        if answer == 'yes':
             return True
-        elif antwoord == 'no':
+        elif answer == 'no':
             return False
         else:
             print("Invalid Option!")
@@ -93,7 +92,6 @@ def lowerHalfScore(givenList:list):
         bonus = "Full House"
     elif 3 in howManyDigits:
         bonus = "Three of a Kind"
-
 
     return bonus
 
@@ -325,11 +323,6 @@ SUBTOTAL = {}""".format(SubTotalUpper, TotalLower, SubTotal)
     print(BovensteHelftText)
     print(OndersteHelftText)
     print(SubTotalText)
-
-
-
-
-
 
 #Hier is de start van de Game
 

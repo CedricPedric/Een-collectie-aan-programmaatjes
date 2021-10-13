@@ -16,7 +16,7 @@ def deckBuilder():
 
 def canPlay(TopCard:dict, HandPlayer:list):
 	for x in range(0, len(HandPlayer)):
-		if TopCard["Waarde"] == HandPlayer[x]["Waarde"] or TopCard["Kleur"] == HandPlayer[x]["Kleur"]:
+		if TopCard["Waarde"] == HandPlayer[x]["Waarde"] or TopCard["Kleur"] == HandPlayer[x]["Kleur"] or HandPlayer[x]["Kleur"] == "Wild":
 			print("Je kan spelen!")
 			return True	
 	print("Je kan niet spelen!")
@@ -192,24 +192,35 @@ while not isWinner(players) and not isWinnerScore(playerScores):
 		CurrentPlayer = 0
 
 	if topCard["Kleur"] == "Wild":
-		print("Er is een Wild Kaart gespeeld")
-		givenColor = mostColor(players[CurrentPlayer -1])
-		print(f"Speler die de Wild Card speelt wilt {givenColor}")
-		if givenColor == "Groen":
-			topCard = {"Kleur":"Groen","Waarde":"Null"}
-		elif givenColor == "Rood":
-			topCard = {"Kleur":"Rood","Waarde":"Null"}
-		elif givenColor == "Blauw":
-			topCard = {"Kleur":"Blauw","Waarde":"Null"}
-		elif givenColor == "Geel":
-			topCard = {"Kleur":"Geel","Waarde":"Null"}
-	if topCard["Waarde"] == "Draw Four":
-		print(f"Er is een Wild Four gespeeld Speler {CurrentPlayer + 1} pakt 4 kaarten en slaat deze beurt over!")
-		players[CurrentPlayer].extend(drawCards(4))
-		if Reverse:
-			CurrentPlayer -= 1
+		if topCard == {'Kleur': 'Wild', 'Waarde': 'Draw Four'}:
+			print(f"Er is een Wild Four gespeeld Speler {CurrentPlayer + 1} pakt 4 kaarten en slaat deze beurt over!")
+			players[CurrentPlayer].extend(drawCards(4))
+			if Reverse:
+				CurrentPlayer -= 1
+			else:
+				CurrentPlayer += 1
+			givenColor = mostColor(players[CurrentPlayer -2])
+			print(f"Speler die de Wild Card speelt wilt {givenColor}")
+			if givenColor == "Groen":
+				topCard = {"Kleur":"Groen","Waarde":"Null"}
+			elif givenColor == "Rood":
+				topCard = {"Kleur":"Rood","Waarde":"Null"}
+			elif givenColor == "Blauw":
+				topCard = {"Kleur":"Blauw","Waarde":"Null"}
+			elif givenColor == "Geel":
+				topCard = {"Kleur":"Geel","Waarde":"Null"}
 		else:
-			CurrentPlayer += 1
+			print("Er is een Wild Kaart gespeeld")
+			givenColor = mostColor(players[CurrentPlayer -1])
+			print(f"Speler die de Wild Card speelt wilt {givenColor}")
+			if givenColor == "Groen":
+				topCard = {"Kleur":"Groen","Waarde":"Null"}
+			elif givenColor == "Rood":
+				topCard = {"Kleur":"Rood","Waarde":"Null"}
+			elif givenColor == "Blauw":
+				topCard = {"Kleur":"Blauw","Waarde":"Null"}
+			elif givenColor == "Geel":
+				topCard = {"Kleur":"Geel","Waarde":"Null"}
 	elif topCard["Waarde"] == 'Reverse':
 		print(f"Er is een reverse gespeeld het rondje draait om!")
 		if len(players) == 2:
@@ -260,8 +271,8 @@ while not isWinner(players) and not isWinnerScore(playerScores):
 		else:
 			players[CurrentPlayer].extend(drawCards(1))
 
-	q = input("stop?")
-	if q == 'y':
+	answer = input("Wilt u dat het spel stopt [yes] or [no]?")
+	if answer.lower == 'yes':
 		break
 	
 	print("Scores zijn",playerScores)

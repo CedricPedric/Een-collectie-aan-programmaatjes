@@ -173,7 +173,7 @@ while True:
 		break
 
 for z in range(inputHowManyPlayer):
-	PlayerCards = drawCards(3)
+	PlayerCards = drawCards(7)
 	players.append(PlayerCards)
 
 playerScores = []
